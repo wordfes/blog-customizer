@@ -44,7 +44,7 @@
 
 .selectWrapper:not([data-is-active='true'])
 	.placeholder:not([data-status='invalid']):hover {
-	outline: 3px solid #000000;
+	outline: 1px solid #ffc802;
 }
 
 .select {
@@ -71,6 +71,7 @@
 	background-color: rgb(255 255 255 / 100%);
 	border: 1px;
 	cursor: pointer;
+	transition: background-color 0.3s ease;
 }
 
 .option[aria-selected='true'] {
@@ -78,7 +79,11 @@
 }
 
 .option:hover {
-	background: var(--grey, #c4c4c4);
+	background-color: var(--grey, #eeeeee);
+}
+
+.option:active {
+	background-color: var(--grey, #d7d7d7);
 }
 
 @mixin option-color-before {
