@@ -10,6 +10,8 @@ import { Button } from 'components/button';
 
 import {
 	ArticleStateType,
+	OptionType,
+	defaultArticleState,
 	fontFamilyOptions,
 	fontSizeOptions,
 	fontColors,
@@ -19,15 +21,13 @@ import {
 
 import styles from './ArticleParamsForm.module.scss';
 
-export type ArticleParamsFormProps = {
-	articleParams: ArticleStateType;
-};
-
-export const ArticleParamsForm = ({
-	articleParams,
-}: ArticleParamsFormProps) => {
+export const ArticleParamsForm = () => {
 	const sidebarRef = useRef<HTMLDivElement>(null);
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+	const [currentArticleState, setCurrentArticleState] =
+		useState<ArticleStateType>(defaultArticleState);
+	console.log(currentArticleState);
 
 	const toggleSidebar = () => {
 		setIsSidebarOpen(!isSidebarOpen);
@@ -74,20 +74,38 @@ export const ArticleParamsForm = ({
 					<Select
 						title={'шрифт'}
 						options={fontFamilyOptions}
-						selected={articleParams.fontFamilyOption}
+						selected={currentArticleState.fontFamilyOption}
+						onChange={(selected: OptionType) =>
+							setCurrentArticleState((oldState) => ({
+								...oldState,
+								fontFamilyOption: selected,
+							}))
+						}
 					/>
 
 					<RadioGroup
 						title={'размер шрифта'}
 						name={'fonst-size'}
 						options={fontSizeOptions}
-						selected={articleParams.fontSizeOption}
+						selected={currentArticleState.fontSizeOption}
+						onChange={(selected: OptionType) =>
+							setCurrentArticleState((oldState) => ({
+								...oldState,
+								fontSizeOption: selected,
+							}))
+						}
 					/>
 
 					<Select
 						title={'цвет шрифта'}
 						options={fontColors}
-						selected={articleParams.fontColor}
+						selected={currentArticleState.fontColor}
+						onChange={(selected: OptionType) =>
+							setCurrentArticleState((oldState) => ({
+								...oldState,
+								fontColor: selected,
+							}))
+						}
 					/>
 
 					<Separator />
@@ -95,13 +113,25 @@ export const ArticleParamsForm = ({
 					<Select
 						title={'цвет фона'}
 						options={backgroundColors}
-						selected={articleParams.backgroundColor}
+						selected={currentArticleState.backgroundColor}
+						onChange={(selected: OptionType) =>
+							setCurrentArticleState((oldState) => ({
+								...oldState,
+								backgroundColor: selected,
+							}))
+						}
 					/>
 
 					<Select
 						title={'ширина контента'}
 						options={contentWidthArr}
-						selected={articleParams.contentWidth}
+						selected={currentArticleState.contentWidth}
+						onChange={(selected: OptionType) =>
+							setCurrentArticleState((oldState) => ({
+								...oldState,
+								contentWidth: selected,
+							}))
+						}
 					/>
 
 					<div className={styles.bottomContainer}>
