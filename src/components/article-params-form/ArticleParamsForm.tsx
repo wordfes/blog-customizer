@@ -21,18 +21,29 @@ import {
 
 import styles from './ArticleParamsForm.module.scss';
 
-export const ArticleParamsForm = () => {
+type ArticleParamsFormProps = (props: {
+	setArticleState: (articleState: ArticleStateType) => void;
+}) => JSX.Element;
+
+export const ArticleParamsForm: ArticleParamsFormProps = ({
+	setArticleState,
+}) => {
+	// Ссылка для доступа к DOM-элементу сайдбара
 	const sidebarRef = useRef<HTMLDivElement>(null);
+
+	// Состояние сайдбара открыти или закрыт
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-	const [currentArticleState, setCurrentArticleState] =
+	// Состояние формы, хранит установленные в ней значения
+	const [formState, setFormState] =
 		useState<ArticleStateType>(defaultArticleState);
-	console.log(currentArticleState);
 
+	// Фунция открытия/закрытия сайдбара
 	const toggleSidebar = () => {
 		setIsSidebarOpen(!isSidebarOpen);
 	};
 
+	// Закрытие сайдбара по клику на оверлей и нажатию кнопки Esc
 	useEffect(() => {
 		function handleCloseByClick(event: MouseEvent) {
 			if (
@@ -58,6 +69,19 @@ export const ArticleParamsForm = () => {
 		};
 	}, []);
 
+	// Применяем стили заданные в форме к статье
+	const submitForm = (evt: React.FormEvent) => {
+		evt.preventDefault();
+		setArticleState(formState);
+	};
+
+	// Сбрасываем состояния форм и страницы к дефолтным
+	const resetForm = (evt: React.FormEvent) => {
+		evt.preventDefault();
+		setFormState(defaultArticleState);
+		setArticleState(defaultArticleState);
+	};
+
 	return (
 		<>
 			<ArrowButton onClick={toggleSidebar} isSidebarOpen={isSidebarOpen} />
@@ -66,7 +90,7 @@ export const ArticleParamsForm = () => {
 					[styles.container_open]: isSidebarOpen,
 				})}
 				ref={sidebarRef}>
-				<form className={styles.form}>
+				<form className={styles.form} onSubmit={submitForm} onReset={resetForm}>
 					<Text as={'h3'} size={31} weight={800} uppercase>
 						Задайте параметры
 					</Text>
@@ -74,9 +98,9 @@ export const ArticleParamsForm = () => {
 					<Select
 						title={'шрифт'}
 						options={fontFamilyOptions}
-						selected={currentArticleState.fontFamilyOption}
+						selected={formState.fontFamilyOption}
 						onChange={(selected: OptionType) =>
-							setCurrentArticleState((oldState) => ({
+							setFormState((oldState) => ({
 								...oldState,
 								fontFamilyOption: selected,
 							}))
@@ -87,9 +111,9 @@ export const ArticleParamsForm = () => {
 						title={'размер шрифта'}
 						name={'fonst-size'}
 						options={fontSizeOptions}
-						selected={currentArticleState.fontSizeOption}
+						selected={formState.fontSizeOption}
 						onChange={(selected: OptionType) =>
-							setCurrentArticleState((oldState) => ({
+							setFormState((oldState) => ({
 								...oldState,
 								fontSizeOption: selected,
 							}))
@@ -99,9 +123,9 @@ export const ArticleParamsForm = () => {
 					<Select
 						title={'цвет шрифта'}
 						options={fontColors}
-						selected={currentArticleState.fontColor}
+						selected={formState.fontColor}
 						onChange={(selected: OptionType) =>
-							setCurrentArticleState((oldState) => ({
+							setFormState((oldState) => ({
 								...oldState,
 								fontColor: selected,
 							}))
@@ -113,9 +137,9 @@ export const ArticleParamsForm = () => {
 					<Select
 						title={'цвет фона'}
 						options={backgroundColors}
-						selected={currentArticleState.backgroundColor}
+						selected={formState.backgroundColor}
 						onChange={(selected: OptionType) =>
-							setCurrentArticleState((oldState) => ({
+							setFormState((oldState) => ({
 								...oldState,
 								backgroundColor: selected,
 							}))
@@ -125,9 +149,9 @@ export const ArticleParamsForm = () => {
 					<Select
 						title={'ширина контента'}
 						options={contentWidthArr}
-						selected={currentArticleState.contentWidth}
+						selected={formState.contentWidth}
 						onChange={(selected: OptionType) =>
-							setCurrentArticleState((oldState) => ({
+							setFormState((oldState) => ({
 								...oldState,
 								contentWidth: selected,
 							}))
