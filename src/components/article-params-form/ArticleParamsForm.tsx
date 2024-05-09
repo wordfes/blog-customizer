@@ -45,6 +45,8 @@ export const ArticleParamsForm: ArticleParamsFormProps = ({
 
 	// Закрытие сайдбара по клику на оверлей и нажатию кнопки Esc
 	useEffect(() => {
+		if (!isSidebarOpen) return;
+
 		function handleCloseByClick(event: MouseEvent) {
 			if (
 				sidebarRef.current &&
@@ -67,7 +69,7 @@ export const ArticleParamsForm: ArticleParamsFormProps = ({
 			document.removeEventListener('mousedown', handleCloseByClick);
 			document.removeEventListener('keydown', handleCloseByEsc);
 		};
-	}, []);
+	}, [isSidebarOpen]);
 
 	// Применяем стили заданные в форме к статье
 	const submitForm = (evt: React.FormEvent) => {
