@@ -30,6 +30,7 @@
 	text-align: center;
 	border-right: 1px solid #000000;
 	cursor: pointer;
+	transition: background-color 0.3s ease;
 }
 
 /* Убираем бордер у последнего в radiogroup, чтобы не было двойного бордера */
@@ -40,11 +41,11 @@
 
 .label:hover,
 .item[data-checked='true'] .label:hover {
-	background: var(--gold, #ffc802);
+	background-color: var(--gold, #ffedab);
 }
 
 .item[data-checked='true'] .label {
-	background: var(--gold, #ffc802);
+	background-color: var(--gold, #ffc802);
 }
 
 .container {

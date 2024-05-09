@@ -8,12 +8,36 @@
 	text-align: center;
 	border: 1px solid #000000;
 	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.button div {
+	color: inherit;
+	transition: color 0.3s ease;
 }
 
 .button:active {
-	background: var(--gold, #ffc802);
+	background-color: var(--gold, #ffc802);
 }
 
 .button:hover {
-	background: var(--gold, #ffc802);
+	background-color: var(--gold, #ffc802);
+}
+
+button[type='reset'] {
+	background-color: #ffffff;
+}
+
+button[type='reset']:hover {
+	color: #ffffff;
+	background-color: #000000;
+}
+
+button[type='submit'] {
+	background-color: #ffc802;
+}
+
+button[type='submit']:hover {
+	color: #000000;
+	background-color: #ffedab;
 }
